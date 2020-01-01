@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import NewSingle from "./NewSingle";
+import axios from "axios";
 
 class News extends Component {
   constructor(props) {
@@ -12,13 +13,11 @@ class News extends Component {
   componentDidMount() {
     const url =
       "https://newsapi.org/v2/everything?q=travel&airlines&accommodations&flights&from=2019-12-01&sortBy=publishedAt&apiKey=0280946441554f9a95693f8a68599537";
-    fetch(url)
+    axios
+      .get(url)
       .then(response => {
-        return response.json();
-      })
-      .then(data => {
         this.setState({
-          news: data.articles
+          news: response.data.articles
         });
       })
       .catch(error => console.log(error));
@@ -31,7 +30,7 @@ class News extends Component {
   }
 
   render() {
-    return <ul>{this.renderItems()}</ul>;
+    return <div className='row'>{this.renderItems()}</div>;
   }
 }
 
